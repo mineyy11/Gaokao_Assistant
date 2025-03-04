@@ -1,4 +1,3 @@
-from prompts.gk_prompt import ScorePromptGenerator
 from agent.gk_agent import GKAgentExecutor
 
 if __name__ == "__main__":

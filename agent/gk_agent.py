@@ -9,6 +9,7 @@ class GKAgentExecutor:
     def __init__(self):
         self._init_agents()
         self.agent_state = {}
+        self.llm = llm
         
 
     def _init_agents(self):
@@ -22,7 +23,8 @@ class GKAgentExecutor:
         print(agent_tasks) # ['A']
         response = ""
         for agent in agent_tasks:
-            response += self.agent_list[agent].run(self.agent_state)
+            response = self.agent_list[agent].run(self.agent_state)
+            self.agent_state["agent_response"] = {agent: response}
         
 
 
