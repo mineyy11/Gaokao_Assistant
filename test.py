@@ -1,6 +1,6 @@
 from prompts.gk_prompt import ScorePromptGenerator
-
+from agent.gk_agent import GKAgentExecutor
 
 if __name__ == "__main__":
-    gk_agent_executor = ScorePromptGenerator()
-    print(gk_agent_executor.generate("20分对应位次？"))
+    gk_agent_executor = GKAgentExecutor()
+    gk_agent_executor.run("我考了620分可以上哪些学校？")

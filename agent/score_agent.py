@@ -5,7 +5,7 @@ from model.llm.base import LLM
 class ScoreAgent:
     def __init__(self,
                  llm,
-                 prompt_generator: ScorePromptGenerator):
+                 prompt_generator = ScorePromptGenerator()):
         self.llm : LLM = llm
         self.prompt_generator = prompt_generator
         pass
