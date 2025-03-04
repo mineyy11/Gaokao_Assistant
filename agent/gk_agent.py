@@ -1,8 +1,9 @@
 from agent.score_agent import ScoreAgent
 from copy import deepcopy
 from model.bert import BERT
+from apis.model_api import llm
 
-AGENT_LIST = {'A': ScoreAgent()}
+AGENT_LIST = {'A': ScoreAgent(llm)}
 
 class GKAgentExecutor:
     def __init__(self):
@@ -17,8 +18,13 @@ class GKAgentExecutor:
     def run(self,
             user_inputs: str):
         self.agent_state["用户问题"] = user_inputs
-        predicted_labels = self.classify.run(user_inputs)
-        print(predicted_labels)
+        agent_tasks = self.classify.run(user_inputs)
+        print(agent_tasks) # ['A']
+        response = ""
+        for agent in agent_tasks:
+            response += self.agent_list[agent].run(self.agent_state)
+        
+
 
 if __name__ == "__main__":
     gk_agent_executor = GKAgentExecutor()
