@@ -1,0 +1,299 @@
+2025-03-04 18:24:07,785 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:32:47,173 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:32:54,133 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'学校分数线表': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', '学校专业分数线表': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分/位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+用户问题：我考了620分可以上哪些学校？。
+注意：答案只需要sql语句，不需要其他任何输出。
+</think>
+
+```sql
+SELECT学校 FROM 学校分数线表 WHERE 最低分 >= 620;
+```
+2025-03-04 18:35:09,256 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:35:16,749 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'school_score': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', 'professional_score': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分/位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+用户问题：我考了620分可以上哪些学校？。
+注意：答案只需要sql语句，不需要其他任何输出。
+</think>
+
+```sql
+SELECT school FROM school_score
+WHERE lowest分 >= '620';
+```
+2025-03-04 18:35:32,962 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:36:07,748 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'school_score': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', 'professional_score': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分/位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+用户问题：我考了620分可以上哪些学校？。
+注意：答案只需要sql语句，不需要其他任何输出。
+好的，我现在需要帮助用户生成一个SQL语句，以确定他以620分可以上哪些学校。用户的问题是，他考了620分，想知道可以被哪些学校录取。考虑到数据库是SQLite的，所以SQL语句必须符合SQLite的语法。
+
+首先，我需要明确用户提供的表结构。有三个表：school_score、professional_score和分数位次表。每个表的字段类型已经给出，我需要分析这些表之间的关系，以及如何利用这些数据来回答用户的问题。
+
+用户的问题涉及分数和学校录取情况，因此可能需要将分数与对应的学校信息关联起来。分数位次表中的字段包括省份、分数、位次、人数。而school_score表中包含学校、年份、录取批次、招生类型、最低分、最低分对应位次、省控线、专业组、选科要求等信息。这可能意味着学校根据分数来确定是否录取，尤其是最低分和位次。
+
+此外，professional_score表包括学校、专业、备注、年份、科目、平均分、最低分/位次等信息。这可能涉及到专业分数，但用户的问题是关于学校录取，可能与专业无关，除非用户有特定的专业偏好。
+
+现在，我需要考虑如何将这些表连接起来。用户的问题是关于分数620，所以可能需要找到所有分数为620的记录，并关联到对应的学校信息。
+
+首先，查看分数位次表，查找分数为620的记录。然后，这些记录可能对应到学校的信息，比如最低分和位次。可能需要将分数位次表中的分数与学校中的最低分进行比较，或者与学校中对应的位次进行比较。
+
+假设学校中的最低分和位次是根据分数来确定的，那么当用户分数为620时，可以查找所有学校中最低分<=620的记录，并且位次满足条件。
+
+然而，具体如何连接还需要考虑表之间的关系。例如，分数位次表中的位次可能与学校中的最低分对应位次有关联。或者，可能需要将分数位次表中的位次与学校中的位次字段关联，以确定是否达到录取要求。
+
+考虑到SQLite的连接方式，可能需要使用JOIN操作来关联这些表。例如，通过学校名称、年份、省份等字段进行连接。
+
+不过，由于用户的问题可能只涉及学校和分数，可能只需要使用分数位
+2025-03-04 18:36:40,649 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:36:51,397 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'school_score': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', 'professional_score': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分/位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+用户问题：我考了620分可以上哪些学校？。
+注意：答案只需要sql语句，不需要其他任何输出。
+</think>
+
+```sql
+SELECT 
+    s.school AS 学校,
+    s.年份 AS 年份,
+    s.录取批次 AS 录取批次,
+    s.招生类型 AS 招生类型,
+    s.最低分 AS 最低分,
+    s.最低分对应位次 AS 最低分对应位次
+FROM 
+    school_score s
+WHERE 
+    s.最低分 >= 620
+```
+2025-03-04 18:37:16,166 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:37:48,276 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'school_score': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', 'professional_score': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分/位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+用户问题：我考了620分可以上哪些学校？。
+注意：答案只需要sql语句，不需要其他任何输出。
+好的，我现在需要帮用户生成一个SQL语句，帮助他找到他考了620分能上哪些学校。用户的问题是关于分数和学校的关系，所以我要仔细分析提供的表结构。
+
+首先，看看表结构。有三个表：school_score、professional_score和分数位次表。我需要确定这些表之间的关系，以及如何连接它们来获取所需的信息。
+
+用户的问题涉及分数和学校，所以我需要找到与分数相关的数据。分数位次表中存储了省份、分数、位次和人数。看起来，分数位次表中的分数是学校录取分数的依据，而学校可能来自不同的省份。
+
+用户提供了分数620，所以我要找到所有分数大于或等于620的记录。然后，这些记录中的学校信息就是用户可以上的学校。
+
+接下来，我需要考虑连接的表。分数位次表可能有省份、分数和位次，而学校可能需要通过其他表连接，比如school_score或professional_score。但用户的问题主要关注学校，而分数位次表中的学校可能没有直接给出，所以可能需要通过其他方式获取学校名称。
+
+或者，可能分数位次表中的学校信息其实是隐含的，比如每个分数对应的学校。但根据提供的表结构，分数位次表中的字段是省份、分数、位次、人数，没有学校名称。所以，可能需要从其他表中连接，比如school_score或professional_score，以获取学校名称。
+
+假设学校信息在school_score表中，那么我可以连接分数位次表和学校表。但分数位次表中没有学校名称，所以可能需要另一个表来连接。或者，可能分数位次表中的学校信息是通过其他方式获取的，比如学校名称可能在另一个表中。
+
+或者，可能学校表中的学校名称是唯一的，而分数位次表中的学校可能与学校表中的学校相关联。但根据表结构，分数位次表没有学校字段，所以可能需要使用JOIN来连接。
+
+比如，分数位次表可能有省份、分数、位次、人数，而学校表有学校名称和其他信息。所以，我需要找到一种方式，将分数620及以上的记录与学校表连接起来。
+
+假设学校表是school_score，其中有一个学校字段。那么，我可以先找到分数位次表中分数>=620的记录，然后将这些记录与学校表连接，以获取学校名称。
+
+但因为分数
+2025-03-04 18:41:49,491 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:42:08,729 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'school_score': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', 'professional_score': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+必须注意：答案只需要sql语句，不需要其他任何输出。
+如：
+用户问题：湖南大学2022年录取分数线。
+输出：SELECT 学校, 年份, 录取批次, 招生类型,  最低分, 最低分对应位次 FROM school_score WHERE 学校 = '湖南大学' AND 年份 = 2022
+
+用户问题：我考了620分可以上哪些学校？。
+输出：SELECT学校, 年份, 专业, 招生类型,  最低分, 最低分对应位次 FROM school_score WHERE 最低分 <=620 ORDER BY最低分 DESC
+
+用户问题：我省份是湖南，分数600分，可以报哪些专业？
+输出：SELECT学校, 年份, 专业, 平均分, 最低分, 最低分对应位次 FROM professional_score WHERE 省份 = '湖南' AND 平均分 >=600 ORDER BY 平均分 DESC
+
+现在问题是：我省份是湖南，分数600分，可以报哪些专业？
+
+（注意：分数位次表中的分数是按分数排序的，位次代表的是排名的位置，高位次代表分数更高。）
+
+根据这个例子，我需要生成对应的查询语句，必须符合sqlite的语句格式。
+</think>
+
+SELECT学校, 年份, 专业, 平均分, 最低分, 最低分对应位次 FROM professional_score WHERE 省份 = '湖南' AND 平均分 >=600 ORDER BY 平均分 DESC
+2025-03-04 18:42:52,935 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:43:00,086 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'school_score': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', 'professional_score': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+必须注意：答案只需要sql语句，不需要其他任何输出。
+如：
+用户问题：湖南大学2022年录取分数线。
+输出：SELECT 学校, 年份, 录取批次, 招生类型,  最低分, 最低分对应位次 FROM school_score WHERE 学校 = '湖南大学' AND 年份 = 2022
+请回答：
+用户问题：我考了620分可以上哪些学校？。
+输出：
+</think>
+
+```sql
+SELECT school FROM school_score WHERE 最低分 >= 620
+```
+2025-03-04 18:45:45,945 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:45:56,521 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，SQL语句中的表名和字段名应该满足表结构中的字段名和表名，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'school_score': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', 'professional_score': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+必须注意：答案只需要sql语句，不需要其他任何输出。
+如：
+用户问题：湖南大学2022年录取分数线。
+输出：SELECT 学校, 年份, 录取批次, 招生类型,  最低分, 最低分对应位次 FROM school_score WHERE 学校 = '湖南大学' AND 年份 = 2022
+请回答：
+用户问题：我考了620分可以上哪些学校？。
+输出：
+</think>
+
+```sql
+SELECT 专业 FROM professional_score WHERE 平均分 >= 620
+```
+2025-03-04 18:50:03,429 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:50:14,102 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:50:22,445 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，SQL语句中的表名和字段名应该满足表结构中的字段名和表名，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'school_score': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', 'professional_score': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+必须注意：答案只需要sql语句，不需要其他任何输出。
+如：
+用户问题：湖南大学2022年录取分数线。
+输出：SELECT 学校, 年份, 录取批次, 招生类型,  最低分, 最低分对应位次 FROM school_score WHERE 学校 = '湖南大学' AND 年份 = 2022
+请回答：
+用户问题：我考了620分可以上哪些学校？。
+输出：
+</think>
+
+```sql
+SELECT 专业 FROM professional_score WHERE 年份 = 2022 AND 平均分 >= 620
+```
+2025-03-04 18:51:17,068 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:51:28,095 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，SQL语句中的表名和字段名应该满足表结构中的字段名和表名，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'school_score': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', 'professional_score': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+必须注意：答案只需要sql语句，不需要其他任何输出。
+如：
+用户问题：湖南大学2022年录取分数线。
+输出：SELECT 学校, 年份, 录取批次, 招生类型,  最低分, 最低分对应位次 FROM school_score WHERE 学校 = '湖南大学' AND 年份 = 2022
+请回答：
+用户问题：我考了620分可以上哪些学校？。
+输出：
+</think>
+
+```sql
+SELECT 专业 FROM professional_score WHERE 年份 = 2022 AND 平均分 >= 620
+```
+2025-03-04 18:52:49,146 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 18:53:07,315 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，SQL语句中的表名和字段名应该满足表结构中的字段名和表名，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'school_score': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', 'professional_score': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+必须注意：答案只需要sql语句，不需要其他任何输出。
+如：
+用户问题：湖南大学2022年录取分数线。
+输出：SELECT 学校, 年份, 录取批次, 招生类型,  最低分, 最低分对应位次 FROM school_score WHERE 学校 = '湖南大学' AND 年份 = 2022
+请回答：
+用户问题：我考了620分可以上哪些学校？。
+输出：
+</think>
+
+为了回答“我考了620分可以上哪些学校？”的问题，我们需要从分数位次表中找到位次为620的数据。然后，我们可以根据位次620在各学校中的排名来确定哪些学校可以被录取。
+
+步骤如下：
+
+1. 从分数位次表中找到位次为620的数据。
+2. 根据各学校的最低分和最低分对应位次来确定哪些学校的最低分不低于620。
+3. 进行查询，返回所有最低分不低于620的学校信息。
+
+以下是对应的SQL语句：
+
+```sql
+SELECT 学校, 年份, 录取批次, 招生类型, 最低分, 最低分对应位次 FROM school_score WHERE 最低分 >= 620;
+```
+2025-03-04 19:01:17,335 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 19:01:25,736 - root - INFO - sql: <｜User｜>你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，SQL语句中的表名和字段名应该满足表结构中的字段名和表名，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+------表结构说明开始------
+{'school_score': '\n字段 类型\n学校 TEXT \n年份 TEXT\n录取批次 TEXT\n招生类型 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n省控线 TEXT\n专业组 TEXT\n选科要求 TEXT\n', 'professional_score': '\n字段 类型\n学校 TEXT\n专业 TEXT\n备注 TEXT\n年份 TEXT\n科目 TEXT\n平均分 TEXT\n最低分 TEXT\n最低分对应位次 TEXT\n', '分数位次表': '\n字段 类型\n省份 TEXT\n分数 TEXT\n位次 TEXT\n人数 TEXT\n'}
+------表结构说明结束------
+
+必须注意：答案只需要sql语句，不需要其他任何输出。
+如：
+用户问题：湖南大学2022年录取分数线。
+输出：SELECT 学校, 年份, 录取批次, 招生类型,  最低分, 最低分对应位次 FROM school_score WHERE 学校 = '湖南大学' AND 年份 = 2022
+请回答：
+用户问题：我考了620分可以上哪些学校？。
+输出：
+</think>
+
+```sql
+SELECT 学校, 年份, 最低分, 最低分对应位次 FROM school_score WHERE 最低分 >= 620
+```
+2025-03-04 19:14:29,190 - accelerate.utils.modeling - INFO - Device 0 seems unavailable, Proceeding to check subsequent devices.
+2025-03-04 19:16:03,100 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 19:16:12,107 - root - INFO - sql: SELECT 学校, 年份, 专业, 专业最低分, 专业最低分对应位次 FROM professional_score WHERE 年份 = 2023 AND 专业最低分 >= 620
+2025-03-04 19:16:53,269 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 19:17:00,969 - root - INFO - sql: SELECT 专业 FROM professional_score WHERE 平均分 >= 620
+2025-03-04 19:17:57,766 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 19:18:06,265 - root - INFO - sql: SELECT 学校, 年份, 最低分, 最低分对应位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 640
+2025-03-04 19:18:50,298 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-04 19:18:58,702 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > '640'
+2025-03-05 09:53:00,082 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 09:53:08,760 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > '640'
+2025-03-05 09:53:59,414 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 09:54:08,177 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 09:55:47,220 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 09:55:56,158 - root - INFO - sql: SELECT 学校, 年份, 最低分,  最低分对应位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 09:58:42,128 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 09:58:51,824 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:07:28,079 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:07:37,038 - root - INFO - sql: SELECT 学校 FROM school_score WHERE 年份 = '2023' AND 最低分 > '600'
+2025-03-05 10:08:04,825 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:08:15,602 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:09:37,135 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:11:50,190 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:11:59,429 - root - INFO - sql: SELECT 学校 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:12:25,452 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:12:34,642 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:14:07,593 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:19:15,071 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:19:24,116 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:19:26,523 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:19:28,253 - root - INFO - sql: SELECT 学校 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:19:30,569 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:19:32,817 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > '600'
+2025-03-05 10:19:35,292 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600;
+2025-03-05 10:19:37,063 - root - INFO - sql: SELECT 学校 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:19:39,340 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > '600'
+2025-03-05 10:19:41,725 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:19:44,068 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:20:04,038 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:20:12,796 - root - INFO - sql: SELECT 学校 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:22:08,155 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:22:20,677 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:22:48,163 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:22:57,806 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > '600'
+2025-03-05 10:27:44,032 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:27:54,963 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > 600
+2025-03-05 10:30:20,451 - accelerate.utils.modeling - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+2025-03-05 10:30:31,436 - root - INFO - sql: SELECT 学校, 年份, 最低分, 位次 FROM school_score WHERE 年份 = '2023' AND 最低分 > '600'
