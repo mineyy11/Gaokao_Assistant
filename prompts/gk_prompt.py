@@ -36,7 +36,7 @@ SCHEME_STRUCTURE_DICT = {
 '''
 }
 
-BS_SQL_GENERATOR_TEMPLATE="""你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，SQL语句中的表名和字段名应该满足表结构中的字段名和表名，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
+GK_SQL_GENERATOR_TEMPLATE="""你是一名高级数据库工程师，请你根据所提供的表结构说明以及用户问题，生成sql语句，SQL语句中的表名和字段名应该满足表结构中的字段名和表名，数据库为sqlite，你生成的sql语句格式必须符合sqlite格式。
 ------表结构说明开始------
 {table_structure_introduction}
 ------表结构说明结束------
@@ -49,13 +49,24 @@ BS_SQL_GENERATOR_TEMPLATE="""你是一名高级数据库工程师，请你根据
 用户问题：{user_question}。
 输出：
 """
+GK_GENERATOR_TEMPLATE = '''
+你是一名专业的高考咨询顾问，请你根据用户的问题并结合所有查询的结果，完成对用户提问的回答。
+要求如下：
+1、若有查询结果则需要根据查询结果进行回答。
+2、若没有查询结果则根据用户问题进行回答。
+3、若有多个查询结果则需要根据多个查询结果综合进行回答。
+------查询结果说明开始------
+{search_result}
+------查询结果说明结束------
+用户问题：{user_question}
+'''
 
 
 
 class ScorePromptGenerator(PromptGenerator):
 
     def __init__(self,
-                 task_template: str = BS_SQL_GENERATOR_TEMPLATE,
+                 task_template: str = GK_SQL_GENERATOR_TEMPLATE,
                  scheme_structure_dict: dict = SCHEME_STRUCTURE_DICT):
         self.task_template = task_template
         self.scheme_structure_dict = scheme_structure_dict
@@ -64,6 +75,18 @@ class ScorePromptGenerator(PromptGenerator):
         sql_template = self.task_template.format(
             table_structure_introduction=self.scheme_structure_dict,
             user_question=user_input
+        )
+        return sql_template
+    
+class GKPromptGenerator(PromptGenerator):
+    def __init__(self,
+                 task_template: str = GK_GENERATOR_TEMPLATE,):
+        self.task_template = task_template
+    
+    def generate(self, agent_state):
+        sql_template = self.task_template.format(
+            search_result=agent_state["agent_response"],
+            user_question=agent_state["用户问题"]
         )
         return sql_template
     

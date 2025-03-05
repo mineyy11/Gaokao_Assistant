@@ -1,15 +1,20 @@
 from agent.score_agent import ScoreAgent
+from prompts.gk_prompt import GKPromptGenerator
 from copy import deepcopy
 from model.bert import BERT
 from apis.model_api import llm
 
 AGENT_LIST = {'A': ScoreAgent(llm)}
+AGENT_DESCRIPTION = {
+    'A': '数据库查询',
+}
 
 class GKAgentExecutor:
     def __init__(self):
         self._init_agents()
         self.agent_state = {}
         self.llm = llm
+        self.prompt_generator = GKPromptGenerator()
         
 
     def _init_agents(self):
@@ -24,9 +29,10 @@ class GKAgentExecutor:
         response = ""
         for agent in agent_tasks:
             response = self.agent_list[agent].run(self.agent_state)
-            self.agent_state["agent_response"] = {agent: response}
-        
-        
+            self.agent_state["agent_response"] = {AGENT_DESCRIPTION[agent]: response}
+        print("Agent执行完毕")
+        prompt = self.prompt_generator.generate(self.agent_state)
+        print(prompt)
 
 
 if __name__ == "__main__":
